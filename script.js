@@ -1,6 +1,5 @@
 /* Переменные */
 const sudList = [
-  "",
   "Областной",
   "Ленинский",
   "Дзержинский",
@@ -14,7 +13,6 @@ const sudList = [
   "Мировой Оренбургский",
 ];
 const mvdList = [
-  "",
   "СЧ СУ области",
   "СЧ СУ города",
   "ОП№1",
@@ -26,7 +24,6 @@ const mvdList = [
   "ОП№7",
 ];
 const skList = [
-  "",
   "ОВД1",
   "ОВД2",
   "ОВД3",
@@ -54,7 +51,8 @@ async function getData() {
   );
   let result = await response.json();
    
-  arrObj = Object.keys(result).map((key) => result[key]);   
+  arrObj = Object.keys(result).map((key) => result[key]);
+  arrObj.sort((a, b) => moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY"));
   fillBodyTable(arrObj);
 }
 getData().catch(alert);
@@ -108,7 +106,7 @@ function fillBodyTable(obj) {
   total.innerHTML = Math.round(sum);
 }
 
-/* Функция создания строки в таблице модального окна  */
+/* Функция создания строки в таблице модального окна  */         /* ПЕРЕМИСАТЬ !!! в качестве аргумента массив и его перебрать */
 const creatPayTable = (item, index) => {
   return `
         <tr class="worked">
@@ -169,38 +167,60 @@ function getDate(str) {
 }
 
 /* Получение данных из инпутов формы и создания из них объекта, который добавляется в таблицу и в базу данных*/
-const formInput = document.querySelector(".form-input");
-formInput.addEventListener("submit", function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  let obj = {};
  
-  if (this.elements[0].checked) {
-     
-     
+  const formInput = document.querySelector(".needs-validation");
+  formInput.addEventListener("submit", function (e) {
+    if (!formInput.checkValidity()) {
+       
+      e.preventDefault();
+      e.stopPropagation();
+      this.reset()
+    }
+    formInput.classList.add("was-validated")
+   
     
+  })
+  
+    
+ 
+  //e.stopPropagation();
+ /*  let obj = {};
+   
+  if (this.elements[0].checked) {
     obj = {
       organ: this.elements[0].value,
       organName: this.elements[1].value,
       officialName: this.elements[6].value,
-      clientName: this.elements[7].value,
+      clientName: this.elements[7].value.trim().toLowerCase(),
       date: getDate(this.elements[8].value),
       cost: +this.elements[9].value,
     };
-  } else if (this.elements[2].checked) {
-      
-     
+    selectSud.hidden = true;
+    selectMvd.hidden = true;
+    selectSk.hidden = true;
+    this.reset();
+
+    arrObj.push(obj);
+    fillBodyTable(arrObj);
+    addNewClient(obj);
+  } if (this.elements[2].checked) {
     obj = {
       organ: this.elements[2].value,
       organName: this.elements[3].value,
       officialName: this.elements[6].value,
-      clientName: this.elements[7].value,
+      clientName: this.elements[7].value.trim().toLowerCase(),
       date: getDate(this.elements[8].value),
       cost: this.elements[9].value,
     };
-  } else if (this.elements[4].checked) {
-    
-     
+     selectSud.hidden = true;
+     selectMvd.hidden = true;
+     selectSk.hidden = true;
+     this.reset();
+
+     arrObj.push(obj);
+     fillBodyTable(arrObj);
+     addNewClient(obj);
+  } if (this.elements[4].checked && this.elements !== "") {
     obj = {
       organ: this.elements[4].value,
       organName: this.elements[5].value,
@@ -209,22 +229,27 @@ formInput.addEventListener("submit", function (e) {
       date: getDate(this.elements[8].value),
       cost: this.elements[9].value,
     };
+     selectSud.hidden = true;
+     selectMvd.hidden = true;
+     selectSk.hidden = true;
+     this.reset();
+     arrObj.push(obj);
+     fillBodyTable(arrObj);
+     addNewClient(obj);
   }
-  selectSud.hidden = true;
-  selectMvd.hidden = true;
-  selectSk.hidden = true;
-  this.reset();
-  arrObj.push(obj);
-  fillBodyTable(arrObj);
-  addNewClient(obj);
-});
+  else {
+    console.log("Заполните поля");
+  } */
+ 
+/* }); */
 
 
 /*  Функция добавление необходимых option в select в форме */
 const addListToSelect = (item, el) => {
   el.forEach((i) => {
     item.innerHTML += `
-        <option value="${i}">${i}</option>
+             
+            <option value="${i}">${i}</option>
     `;
   });
 };
@@ -232,39 +257,29 @@ const addListToSelect = (item, el) => {
 /* Показывание или скрывание определенных селектов, в зависимости от выбранной радиокнопки */
 const radioBtn = document.querySelectorAll(".form-check>input[type='radio']");
 
-function f1 (btn) {
-  for (let i = 0; i < btn.length; i++) {
- 
-    if (btn[i].checked == true) {
-        
-  }
-}
-} 
-
 radioBtn.forEach((i) => {
   i.addEventListener("click", function () {
-     console.log(i.checkVisibility === true);
-    switch (this.value) {
-      
+    
+    switch (this.value) {      
       case "суд":
         selectSud.hidden = false;
         selectMvd.hidden = true;
         selectSk.hidden = true;
-        f1(radioBtn);
+        
         addListToSelect(selectSud, sudList);
         break;
       case "умвд":
         selectMvd.hidden = false;
         selectSud.hidden = true;
         selectSk.hidden = true;
-         f1(radioBtn);
+        
         addListToSelect(selectMvd, mvdList);
         break;
       case "ск":
         selectSk.hidden = false;
         selectSud.hidden = true;
         selectMvd.hidden = true;
-        f1(radioBtn);
+       
         addListToSelect(selectSk, skList);
         break;
       default:
@@ -287,8 +302,11 @@ document.querySelector(".table-pay").addEventListener("click", function (e) {
     let nameClient = target.textContent;
 
     arrObj.map((item) => {
-      if (nameClient === item.clientName) {
+      if (nameClient === item.clientName) {       
         arrClient.push(item);
+         arrClient.sort(
+           (a, b) => moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY")
+         );
       }
     });
     sum2 = arrClient.reduce((acc, elem) => acc + +elem.cost, 0);
@@ -301,3 +319,4 @@ document.querySelector(".table-pay").addEventListener("click", function (e) {
     arrClient = [];
   }
 });
+

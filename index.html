@@ -51,7 +51,7 @@
         </div>
         <!-- Содержимое выезжающей справа панели -->
         <div class="offcanvas-body">
-          <form class="form-input">
+          <form class="needs-validation" novalidate>
             <div class="form-check">
               <input
                 class="form-check-input"
@@ -62,11 +62,15 @@
               <label class="form-check-label" for="flexRadioDefault1">
                 Суд
               </label>
+               
               <div class="out-sud">
                 <select
                   class="form-select form-select-sm select-sud"
+                  
                   hidden
-                ></select>
+                >
+              <option hidden selected disabled value=""></option>
+              </select>
               </div>
             </div>
             <div class="form-check">
@@ -77,11 +81,15 @@
                 required
               />
               <label class="form-check-label"> МВД </label>
+               
               <div class="out-mvd">
                 <select
                   class="form-select form-select-sm select-mvd"
                   hidden
-                ></select>
+                  
+                >
+              <option hidden selected disabled value=""></option>
+              </select>
               </div>
             </div>
             <div class="form-check">
@@ -92,11 +100,14 @@
                 required
               />
               <label class="form-check-label"> СК </label>
+              
               <div class="out-sk">
                 <select
                   class="form-select form-select-sm select-sk has-validation"
                   hidden
-                ></select>
+                >
+               <option hidden selected disabled value=""></option>
+              </select>
               </div>
             </div>
             <div class="mb-3">
@@ -109,6 +120,7 @@
                 id="exampleFormControlInput1"
                 required
               />
+                
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput2" class="form-label"
@@ -120,6 +132,7 @@
                 id="exampleFormControlInput2"
                 required
               />
+              
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput3" class="form-label"
@@ -131,6 +144,7 @@
                 id="exampleFormControlInput3"
                 required
               />
+               
             </div>
             <div class="mb-3">
               <label class="form-label">Стоимость участия</label>
@@ -139,20 +153,27 @@
                 aria-label="Default select example"
                 required
               >
-                <option selected value="0">0</option>
+                <option selected disabled value="">0</option>
                 <option value="2712.85">2712.85</option>
                 <option value="2435.7">2435.7</option>
                 <option value="2164.3">2164.3</option>
                 <option value="1892.9">1892.9</option>
               </select>
+               
             </div>
             <button
               class="btn btn-outline-primary btn-add"
               type="submit"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
             >
               Добавить
+            </button>
+              <button
+              class="btn btn-outline-success btn-add"
+              type="button"              
+              aria-label="Close"
+              data-bs-dismiss="offcanvas"
+            >
+              Закрыть
             </button>
           </form>
         </div>
@@ -269,6 +290,7 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <script src="moment.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
