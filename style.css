@@ -7,8 +7,8 @@
 .nav-title {
     margin-left: 50px;
 }
-.btn {
-    margin-right: 55px;
+.btn-burger {
+    margin-right: 40px;
 }
 .navbar {
     position: fixed;   
@@ -19,19 +19,27 @@
     width: 300px;
 }
 .main-table {     
-    top: 70px;
+    top: 85px;
     position: absolute;
     z-index: 0;
     width: 100%;
     text-align: center;
+    padding-left: 55px;
 }
 table {
     font-size: 16px;
     text-align: center;
 }
-th .date {
-    width: 100%;
+th.date {
+   /*  width: 100%; */
     text-align: center;    
+}
+td.td-del, td.cost {
+    width: 45px;
+    padding: 0;
+}
+.vis, .visible {
+    min-width: 170px;
 }
 .client {
     cursor: pointer;
@@ -39,16 +47,41 @@ th .date {
 .modal-dialog {
     max-width: 100%;
 }
+ @media screen and (max-width: 992px) {
+    .modal-dialog {
+    max-width: 100%;    
+}
+.main-table {
+    padding-left: 35px;
+}
 
+}
 @media screen and (max-width: 630px) {
    table {
-    font-size: 10px;}
+    font-size: 10px;
+}
+    .btn-burger {
+    margin-right: 20px;
+}
+.main-table {
+    padding-left: 15px;
+}
     
 }
  @media screen and (max-width: 490px) {
    table {
     font-size: 8px;}
-    .btn {
-    margin-right: 50px;
+    .btn-burger {
+    margin-right: 10px;
 }
+.main-table {
+    padding-left: 7px;
+}
+element.style {
+    padding-right: 27px;
+    padding-left: 0px;
+}
+.vis, .visible {
+    min-width: 105px;
+}    
 }
