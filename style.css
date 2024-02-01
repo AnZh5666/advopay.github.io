@@ -45,11 +45,11 @@ td.td-del, td.cost {
     cursor: pointer;
 } 
 .modal-dialog {
-    max-width: 100%;
+   width: 100%;
 }
  @media screen and (max-width: 992px) {
     .modal-dialog {
-    max-width: 100%;    
+    width: 100%;    
 }
 .main-table {
     padding-left: 35px;
@@ -71,6 +71,9 @@ td.td-del, td.cost {
  @media screen and (max-width: 490px) {
    table {
     font-size: 8px;}
+    .modal-content {
+    width: 355px;
+}
     .btn-burger {
     margin-right: 10px;
 }
@@ -84,4 +87,16 @@ element.style {
 .vis, .visible {
     min-width: 105px;
 }    
+.modal-backdrop {
+    
+    width: 100%;
+    height: 100%;
+    
+}
+}
+
+@media screen and (max-width: 375px) {
+    .modal {
+        left: 4px;
+    }
 }
