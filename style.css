@@ -73,6 +73,7 @@ td.td-del, td.cost {
     font-size: 8px;}
     .modal-content {
     width: 355px;
+    left: 20px;
 }
     .btn-burger {
     margin-right: 10px;
@@ -94,7 +95,7 @@ element.style {
 }
 
 @media screen and (max-width: 375px) {
-    .modal {
-        left: 4px;
+    .modal-content {
+        left: 20px;
     }
 }
