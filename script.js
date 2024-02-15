@@ -169,22 +169,10 @@ function getDate(str) {
 /* Получение данных из инпутов формы и создания из них объекта, который добавляется в таблицу и в базу данных*/
  
   const formInput = document.querySelector(".needs-validation");
-  formInput.addEventListener("submit", function (e) {
-    if (!formInput.checkValidity()) {
-       
-      e.preventDefault();
-      e.stopPropagation();
-      this.reset()
-    }
-    formInput.classList.add("was-validated")
-   
-    
-  })
-  
-    
- 
-  //e.stopPropagation();
- /*  let obj = {};
+formInput.addEventListener("submit", function (e) {
+    e.preventDefault()
+    e.stopPropagation();
+   let obj = {};
    
   if (this.elements[0].checked) {
     obj = {
@@ -239,9 +227,9 @@ function getDate(str) {
   }
   else {
     console.log("Заполните поля");
-  } */
+  } 
  
-/* }); */
+ }); 
 
 
 /*  Функция добавление необходимых option в select в форме */
