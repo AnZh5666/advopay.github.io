@@ -50,9 +50,9 @@ async function getData() {
     }
   );
   let result = await response.json();
-   
+
   arrObj = Object.keys(result).map((key) => result[key]);
-  arrObj.sort((a, b) => moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY"));
+  arrObj.sort((a, b) => moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY")); // выстраивание в хронолигическом порядке по дате убывания
   fillBodyTable(arrObj);
 }
 getData().catch(alert);
@@ -73,7 +73,25 @@ function addNewClient(obj) {
     .catch((error) => {
       console.log(error);
     });
+
 }
+
+
+/* Функция написания получаемой фамилии клиента с заглавной буквы bинициалы с заглавных букв*/
+function f1(a) {
+  let b = 0
+  let c = 0;
+  let result = a.split("")
+  result[0] = result[0].toUpperCase()
+  for (let i = 0; i < result.length; i++) {
+    if (result[i] === " " || result[i] === ".") {
+      b = result.indexOf(result[i]) + 1;
+      result[b] = result[b].toUpperCase();
+    }
+  }
+  return result.join('');
+}
+
 
 /* Функция создания новой записи с клиентом в таблице */
 const createStringTable = (item, index) => {
@@ -83,9 +101,8 @@ const createStringTable = (item, index) => {
             <td class="organ">${item.organ}</td>
             <td class="organName">${item.organName}</td>
             <td class="officialName">${item.officialName}</td>
-            <td class="client" data-bs-toggle="modal" data-bs-target="#exampleModal">${
-              item.clientName
-            }</td>
+            <td class="client" data-bs-toggle="modal" data-bs-target="#exampleModal">${f1(item.clientName)
+    }</td>
             <td class="date">${item.date}</td>
             <td class="cost">${item.cost}</td>
         </tr>          
@@ -95,6 +112,7 @@ const createStringTable = (item, index) => {
 /* Функия заполнения таблицы всеми объектами */
 function fillBodyTable(obj) {
   const tableBody = document.querySelector(".table-body");
+  const headerSum = document.querySelector('.header-sum')
   tableBody.innerHTML = "";
   obj.forEach((item, index) => {
     tableBody.innerHTML += createStringTable(item, index);
@@ -102,11 +120,13 @@ function fillBodyTable(obj) {
   sum = obj.reduce((acc, elem) => acc + +elem.cost, 0);
   const visible = document.querySelector(".vis");
   visible.hidden = false;
-  const total = document.querySelector(".total");  
+  const total = document.querySelector(".total");
   total.innerHTML = Math.round(sum);
+  headerSum.textContent = Math.round(sum);
 }
 
-/* Функция создания строки в таблице модального окна  */         /* ПЕРЕМИСАТЬ !!! в качестве аргумента массив и его перебрать */
+
+/* Функция создания строки в таблице модального окна  */         /* ПЕРЕПИСАТЬ !!! в качестве аргумента массив и его перебрать */
 const creatPayTable = (item, index) => {
   return `
         <tr class="worked">
@@ -118,9 +138,8 @@ const creatPayTable = (item, index) => {
             ${item.clientName}</td>
             <td class="date">${item.date}</td>
             <td class="cost">${item.cost}</td>
-            <td class="td-del"><button class="btn btn-del" onclick="delClient(${index}, ${
-    item.id
-  })">
+            <td class="td-del"><button class="btn btn-del" onclick="delClient(${index}, ${item.id
+    })">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
                     <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5zm13-3H1v2h14zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
                 </svg>
@@ -130,7 +149,7 @@ const creatPayTable = (item, index) => {
 };
 
 /* Функция удаления конкретного клиента из таблицы и базы данных */
-const delClient = async (index, item) => {
+/* const delClient = async (index, item) => {
   await fetch(`https://648a8b9517f1536d65e93b38.mockapi.io/oplata/${item}`, {
     method: "DELETE",
   })
@@ -153,7 +172,7 @@ const delClient = async (index, item) => {
   getData() 
  
   
-};
+}; */
 
 /* функия переворачивания даты в нужный формат DD.MM.YY */
 function getDate(str) {
@@ -167,13 +186,12 @@ function getDate(str) {
 }
 
 /* Получение данных из инпутов формы и создания из них объекта, который добавляется в таблицу и в базу данных*/
- 
-  const formInput = document.querySelector(".needs-validation");
+const formInput = document.querySelector(".needs-validation");
 formInput.addEventListener("submit", function (e) {
-    e.preventDefault()
-    e.stopPropagation();
-   let obj = {};
-   
+  e.preventDefault()
+  e.stopPropagation();
+  
+  let obj = {};
   if (this.elements[0].checked) {
     obj = {
       organ: this.elements[0].value,
@@ -200,14 +218,14 @@ formInput.addEventListener("submit", function (e) {
       date: getDate(this.elements[8].value),
       cost: this.elements[9].value,
     };
-     selectSud.hidden = true;
-     selectMvd.hidden = true;
-     selectSk.hidden = true;
-     this.reset();
+    selectSud.hidden = true;
+    selectMvd.hidden = true;
+    selectSk.hidden = true;
+    this.reset();
 
-     arrObj.push(obj);
-     fillBodyTable(arrObj);
-     addNewClient(obj);
+    arrObj.push(obj);
+    fillBodyTable(arrObj);
+    addNewClient(obj);
   } if (this.elements[4].checked && this.elements !== "") {
     obj = {
       organ: this.elements[4].value,
@@ -217,26 +235,25 @@ formInput.addEventListener("submit", function (e) {
       date: getDate(this.elements[8].value),
       cost: this.elements[9].value,
     };
-     selectSud.hidden = true;
-     selectMvd.hidden = true;
-     selectSk.hidden = true;
-     this.reset();
-     arrObj.push(obj);
-     fillBodyTable(arrObj);
-     addNewClient(obj);
+    selectSud.hidden = true;
+    selectMvd.hidden = true;
+    selectSk.hidden = true;
+    this.reset();
+    arrObj.push(obj);
+    fillBodyTable(arrObj);
+    addNewClient(obj);
   }
   else {
-    console.log("Заполните поля");
-  } 
- 
- }); 
+    alert("Заполните поля");
+  }
+
+});
 
 
 /*  Функция добавление необходимых option в select в форме */
 const addListToSelect = (item, el) => {
   el.forEach((i) => {
-    item.innerHTML += `
-             
+    item.innerHTML += `             
             <option value="${i}">${i}</option>
     `;
   });
@@ -247,27 +264,27 @@ const radioBtn = document.querySelectorAll(".form-check>input[type='radio']");
 
 radioBtn.forEach((i) => {
   i.addEventListener("click", function () {
-    
-    switch (this.value) {      
+
+    switch (this.value) {
       case "суд":
         selectSud.hidden = false;
         selectMvd.hidden = true;
         selectSk.hidden = true;
-        
+
         addListToSelect(selectSud, sudList);
         break;
       case "умвд":
         selectMvd.hidden = false;
         selectSud.hidden = true;
         selectSk.hidden = true;
-        
+
         addListToSelect(selectMvd, mvdList);
         break;
       case "ск":
         selectSk.hidden = false;
         selectSud.hidden = true;
         selectMvd.hidden = true;
-       
+
         addListToSelect(selectSk, skList);
         break;
       default:
@@ -290,11 +307,11 @@ document.querySelector(".table-pay").addEventListener("click", function (e) {
     let nameClient = target.textContent;
 
     arrObj.map((item) => {
-      if (nameClient === item.clientName) {       
+      if (nameClient === item.clientName) {
         arrClient.push(item);
-         arrClient.sort(
-           (a, b) => moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY")
-         );
+        arrClient.sort(
+          (a, b) => moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY")
+        );
       }
     });
     sum2 = arrClient.reduce((acc, elem) => acc + +elem.cost, 0);
