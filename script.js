@@ -1,4 +1,3 @@
-/* Переменные */
 const sudList = [
   "Областной",
   "Ленинский",
@@ -190,7 +189,8 @@ const formInput = document.querySelector(".needs-validation");
 formInput.addEventListener("submit", function (e) {
   e.preventDefault()
   e.stopPropagation();
-  
+   
+
   let obj = {};
   if (this.elements[0].checked) {
     obj = {
@@ -201,14 +201,18 @@ formInput.addEventListener("submit", function (e) {
       date: getDate(this.elements[8].value),
       cost: +this.elements[9].value,
     };
+    
+     
     selectSud.hidden = true;
     selectMvd.hidden = true;
     selectSk.hidden = true;
     this.reset();
+    
 
     arrObj.push(obj);
     fillBodyTable(arrObj);
     addNewClient(obj);
+   
   } if (this.elements[2].checked) {
     obj = {
       organ: this.elements[2].value,
@@ -218,14 +222,16 @@ formInput.addEventListener("submit", function (e) {
       date: getDate(this.elements[8].value),
       cost: this.elements[9].value,
     };
+    
     selectSud.hidden = true;
     selectMvd.hidden = true;
     selectSk.hidden = true;
     this.reset();
-
+     
     arrObj.push(obj);
     fillBodyTable(arrObj);
     addNewClient(obj);
+   
   } if (this.elements[4].checked && this.elements !== "") {
     obj = {
       organ: this.elements[4].value,
@@ -235,13 +241,16 @@ formInput.addEventListener("submit", function (e) {
       date: getDate(this.elements[8].value),
       cost: this.elements[9].value,
     };
+     
     selectSud.hidden = true;
     selectMvd.hidden = true;
     selectSk.hidden = true;
     this.reset();
+    
     arrObj.push(obj);
     fillBodyTable(arrObj);
     addNewClient(obj);
+   
   }
   else {
     alert("Заполните поля");
@@ -324,4 +333,5 @@ document.querySelector(".table-pay").addEventListener("click", function (e) {
     arrClient = [];
   }
 });
+
 
