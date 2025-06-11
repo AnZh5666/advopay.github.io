@@ -1,4 +1,3 @@
-/* Переменные */
 const sudList = [
   "Областной",
   "Ленинский",
@@ -191,9 +190,8 @@ const formInput = document.querySelector(".needs-validation");
 formInput.addEventListener("submit", function (e) {
   e.preventDefault()
   e.stopPropagation();
-   
-
   let obj = {};
+
   if (this.elements[0].checked) {
     obj = {
       organ: this.elements[0].value,
@@ -212,9 +210,9 @@ formInput.addEventListener("submit", function (e) {
     arrObj.push(obj);
     fillBodyTable(arrObj);
     addNewClient(obj);
-   
+    alert('Запись успешно добавлена!')
   }
-   if (this.elements[2].checked) {
+   else if (this.elements[2].checked) {
     obj = {
       organ: this.elements[2].value,
       organName: this.elements[3].value,
@@ -232,9 +230,9 @@ formInput.addEventListener("submit", function (e) {
     arrObj.push(obj);
     fillBodyTable(arrObj);
     addNewClient(obj);
-   
+   alert('Запись успешно добавлена!')
   }
-   if (this.elements[4].checked && this.elements !== "") {
+   else if (this.elements[4].checked && this.elements !== "") {
     obj = {
       organ: this.elements[4].value,
       organName: this.elements[5].value,
@@ -252,7 +250,7 @@ formInput.addEventListener("submit", function (e) {
     arrObj.push(obj);
     fillBodyTable(arrObj);
     addNewClient(obj);
-   
+   alert('Запись успешно добавлена!')
   }
   else {
     alert("Заполните поля");
