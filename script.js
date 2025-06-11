@@ -1,3 +1,4 @@
+/* Переменные */
 const sudList = [
   "Областной",
   "Ленинский",
@@ -29,6 +30,7 @@ const skList = [
   "СО по ЮАО",
   "СО по САО",
   "Оренбургский МСО",
+  "Военно-следственный отдел"
 ];
 
 const selectSud = document.querySelector(".select-sud");
@@ -134,7 +136,7 @@ const creatPayTable = (item, index) => {
             <td class="organName">${item.organName}</td>
             <td class="officialName">${item.officialName}</td>
             <td class="client">
-            ${item.clientName}</td>
+            ${f1(item.clientName)}</td>
             <td class="date">${item.date}</td>
             <td class="cost">${item.cost}</td>
             <td class="td-del"><button class="btn btn-del" onclick="delClient(${index}, ${item.id
@@ -197,30 +199,29 @@ formInput.addEventListener("submit", function (e) {
       organ: this.elements[0].value,
       organName: this.elements[1].value,
       officialName: this.elements[6].value,
-      clientName: this.elements[7].value.trim().toLowerCase(),
+      clientName: this.elements[7].value.trim(),
       date: getDate(this.elements[8].value),
       cost: +this.elements[9].value,
     };
     
-     
     selectSud.hidden = true;
     selectMvd.hidden = true;
     selectSk.hidden = true;
     this.reset();
-    
 
     arrObj.push(obj);
     fillBodyTable(arrObj);
     addNewClient(obj);
    
-  } if (this.elements[2].checked) {
+  }
+   if (this.elements[2].checked) {
     obj = {
       organ: this.elements[2].value,
       organName: this.elements[3].value,
       officialName: this.elements[6].value,
-      clientName: this.elements[7].value.trim().toLowerCase(),
+      clientName: this.elements[7].value.trim(),
       date: getDate(this.elements[8].value),
-      cost: this.elements[9].value,
+      cost: +this.elements[9].value,
     };
     
     selectSud.hidden = true;
@@ -232,14 +233,15 @@ formInput.addEventListener("submit", function (e) {
     fillBodyTable(arrObj);
     addNewClient(obj);
    
-  } if (this.elements[4].checked && this.elements !== "") {
+  }
+   if (this.elements[4].checked && this.elements !== "") {
     obj = {
       organ: this.elements[4].value,
       organName: this.elements[5].value,
       officialName: this.elements[6].value,
-      clientName: this.elements[7].value.trim().toLowerCase(),
+      clientName: this.elements[7].value.trim(),
       date: getDate(this.elements[8].value),
-      cost: this.elements[9].value,
+      cost: +this.elements[9].value,
     };
      
     selectSud.hidden = true;
@@ -272,28 +274,33 @@ const addListToSelect = (item, el) => {
 const radioBtn = document.querySelectorAll(".form-check>input[type='radio']");
 
 radioBtn.forEach((i) => {
-  i.addEventListener("click", function () {
-
+  i.addEventListener("input", function () {
+   
+    
     switch (this.value) {
       case "суд":
         selectSud.hidden = false;
+        document.querySelector(".mvd-inp").checked = false
+        document.querySelector(".sk-inp").checked = false          
         selectMvd.hidden = true;
-        selectSk.hidden = true;
-
+        selectSk.hidden = true; 
+        
         addListToSelect(selectSud, sudList);
         break;
       case "умвд":
         selectMvd.hidden = false;
         selectSud.hidden = true;
         selectSk.hidden = true;
-
+        document.querySelector(".sud-inp").checked = false
+        document.querySelector(".sk-inp").checked = false
         addListToSelect(selectMvd, mvdList);
         break;
       case "ск":
         selectSk.hidden = false;
         selectSud.hidden = true;
         selectMvd.hidden = true;
-
+        document.querySelector(".mvd-inp").checked = false
+        document.querySelector(".sud-inp").checked = false
         addListToSelect(selectSk, skList);
         break;
       default:
@@ -314,9 +321,11 @@ document.querySelector(".table-pay").addEventListener("click", function (e) {
     let arrClient = [];
     let sum2 = 0;
     let nameClient = target.textContent;
-
+     
+    
     arrObj.map((item) => {
-      if (nameClient === item.clientName) {
+      if (nameClient === f1(item.clientName)) {
+        document.querySelector('.client-modal-title').textContent = f1(item.clientName);
         arrClient.push(item);
         arrClient.sort(
           (a, b) => moment(a.date, "DD.MM.YYYY") - moment(b.date, "DD.MM.YYYY")
@@ -333,5 +342,4 @@ document.querySelector(".table-pay").addEventListener("click", function (e) {
     arrClient = [];
   }
 });
-
 
