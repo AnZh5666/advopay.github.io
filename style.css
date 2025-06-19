@@ -3,7 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+.header-total-sum {
+    margin-left: 1rem;
+}
 .nav-title {
     margin-left: 50px;
 }
