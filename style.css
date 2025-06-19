@@ -66,6 +66,9 @@ td.td-del, td.cost {
 .main-table {
     padding-left: 15px;
 }
+.navbar {
+    flex-wrap: nowrap;    
+}
     
 }
  @media screen and (max-width: 490px) {
