@@ -3,6 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.lightgreen {
+    background-color: lightgreen;
+}
+.header-sum {
+    font-size: 18px;
+    font-weight: bold;
+}
 .header-total-sum {
     margin-left: 1rem;
 }
@@ -16,6 +24,7 @@
     position: fixed;   
     width: 100%;
     z-index: 1;
+    padding-right: 1rem;
 }
 .offcanvas-end {
     width: 300px;
@@ -48,6 +57,17 @@ td.td-del, td.cost {
 } 
 .modal-dialog {
    width: 100%;
+}
+.btn-payed {
+    margin-top: 20px;
+}
+.payed-page {
+    text-decoration: none;
+    color: inherit;
+    text-transform: none;
+}
+ a:hover {
+    color: white;
 }
  @media screen and (max-width: 992px) {
     .modal-dialog {

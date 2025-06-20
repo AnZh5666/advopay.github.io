@@ -1,3 +1,4 @@
+/* Переменные */
 const sudList = [
   "Областной",
   "Ленинский",
@@ -73,9 +74,7 @@ function addNewClient(obj) {
     .catch((error) => {
       console.log(error);
     });
-
 }
-
 
 /* Функция написания получаемой фамилии клиента с заглавной буквы bинициалы с заглавных букв*/
 function f1(a) {
@@ -91,7 +90,6 @@ function f1(a) {
   }
   return result.join('');
 }
-
 
 /* Функция создания новой записи с клиентом в таблице */
 const createStringTable = (item, index) => {
@@ -230,7 +228,7 @@ formInput.addEventListener("submit", function (e) {
     arrObj.push(obj);
     fillBodyTable(arrObj);
     addNewClient(obj);
-   alert('Запись успешно добавлена!')
+    alert('Запись успешно добавлена!')
   }
    else if (this.elements[4].checked && this.elements !== "") {
     obj = {
@@ -272,17 +270,14 @@ const addListToSelect = (item, el) => {
 const radioBtn = document.querySelectorAll(".form-check>input[type='radio']");
 
 radioBtn.forEach((i) => {
-  i.addEventListener("input", function () {
-   
-    
+  i.addEventListener("input", function () {    
     switch (this.value) {
       case "суд":
         selectSud.hidden = false;
         document.querySelector(".mvd-inp").checked = false
         document.querySelector(".sk-inp").checked = false          
         selectMvd.hidden = true;
-        selectSk.hidden = true; 
-        
+        selectSk.hidden = true;         
         addListToSelect(selectSud, sudList);
         break;
       case "умвд":
